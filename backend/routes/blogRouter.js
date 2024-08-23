@@ -1,9 +1,16 @@
 const express = require("express");
-// const { registerUser, login } = require("../controllers/authController");
+const {
+  deleteBlog,
+  getBlog,
+  getAllBlog,
+  newBlog,
+  updateBlog,
+} = require("../controllers/blogController");
 
 const router = express.Router();
 
-router.route("/").post(registerUser);
+router.route("/").get(getAllBlog).post(newBlog)
+router.route("/:id").get(getBlog).delete(deleteBlog).patch(updateBlog)
 
 
 module.exports = router;
