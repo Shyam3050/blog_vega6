@@ -15,7 +15,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://blog-vega6.onrender.com",
+      "https://blog-vega6.vercel.app",
     ],
   })
 );
