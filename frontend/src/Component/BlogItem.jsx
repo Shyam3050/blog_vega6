@@ -1,60 +1,57 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Card,
-  CardBody,
-  CardFooter,
-  Flex,
-  Heading,
-  Image,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
+  import {
+    Box,
+    Button,
+    ButtonGroup,
+    Card,
+    CardBody,
+    CardFooter,
+    Flex,
+    Heading,
+    Image,
+    Stack,
+    Text,
+  } from "@chakra-ui/react";
+  import { NavLink } from "react-router-dom";
 
-const BlogItem = () => {
-  return (
-    <Card maxW="sm">
-      <CardBody>
-        <Box w={200} m={"auto"}>
-          <Image
-            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-            alt="Green double couch with wooden legs"
-            borderRadius="lg"
-            w={"100%"}
-            h={"100%"}
-          />
-        </Box>
-        <Stack mt="6" spacing="3">
-          <Heading size="md">Living room Sofa</Heading>
-          <Text>
-            This sofa is perfect for modern tropical spaces, baroque inspired
-            spaces, earthy toned spaces and for people who love a chic design
-            with a sprinkle of vintage design.
-          </Text>
-        </Stack>
-      </CardBody>
+  const BlogItem = ({blog}) => {
 
-      <CardFooter>
-        <Flex w={"100%"} justifyContent={"space-between"}>
-          <ButtonGroup spacing="2">
-            <NavLink to="/blog/670946901643">
-              <Button variant="solid" colorScheme="blue">
-                View
+    return (
+      <Card maxW="sm">
+        <CardBody>
+          <Box w={200} m={"auto"}>
+            <Image
+              src={blog.image}
+              alt={blog.title}
+              borderRadius="lg"
+              w={"100%"}
+              h={"100%"}
+            />
+          </Box>
+          <Stack mt="6" spacing="3">
+            <Heading size="md">{blog.title}</Heading>
+            <Text>{blog.description}</Text>
+          </Stack>
+        </CardBody>
+
+        <CardFooter>
+          <Flex w={"100%"} justifyContent={"space-between"}>
+            <ButtonGroup spacing="2">
+              <NavLink to={`/blog/${blog._id}`}>
+                <Button variant="solid" colorScheme="blue">
+                  View
+                </Button>
+              </NavLink>
+              <Button variant="ghost" colorScheme="blue">
+                Edit
               </Button>
-            </NavLink>
-            <Button variant="ghost" colorScheme="blue">
-              Edit
+            </ButtonGroup>
+            <Button variant="ghost" colorScheme="red">
+              Delete
             </Button>
-          </ButtonGroup>
-          <Button variant="ghost" colorScheme="red">
-            Delete
-          </Button>
-        </Flex>
-      </CardFooter>
-    </Card>
-  );
-};
+          </Flex>
+        </CardFooter>
+      </Card>
+    );
+  };
 
-export default BlogItem;
+  export default BlogItem;

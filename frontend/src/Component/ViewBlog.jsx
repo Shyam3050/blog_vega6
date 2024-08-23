@@ -1,12 +1,45 @@
-import { Box, Button, ButtonGroup, Container, Heading, Image, Stack, Text } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Container,
+  Heading,
+  Image,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const ViewBlog = () => {
-    const navigate = useNavigate();
-   const goBack = () => {
-     navigate(-1); 
-   };
+const ViewBlog = (props) => {
+  const { blogid } = useParams();
+  console.log(blogid);
+  const [blog, setBlog] = useState("");
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  const fetchBlogs = async () => {
+    try {
+      const response = await fetch(
+        `https://blog-vega6.onrender.com/api/blog/${blogid}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch blogs");
+      }
+      const data = await response.json();
+      setBlog(data.data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
+  console.log(blog);
   return (
     <>
       <Container maxW={"3xl"}>
@@ -20,11 +53,10 @@ const ViewBlog = () => {
             <Button variant="solid" colorScheme="blue" onClick={goBack}>
               Back
             </Button>
-            <NavLink to={"/dashboard"} >
-
-            <Button variant="ghost" colorScheme="blue" >
-              Home
-            </Button>
+            <NavLink to={"/dashboard"}>
+              <Button variant="ghost" colorScheme="blue">
+                Home
+              </Button>
             </NavLink>
           </ButtonGroup>
 
