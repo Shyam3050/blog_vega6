@@ -10,7 +10,15 @@ app.use(express.json());
 
 // cors
 
-app.use(cors());
+// cors
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://blog-vega6.onrender.com",
+    ],
+  })
+);
 app.options("*", cors());
 
 //routes
