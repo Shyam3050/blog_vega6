@@ -57,7 +57,9 @@ exports.deleteBlog = expressAsync(async (req, res, next) => {
 });
 
 exports.getBlog = expressAsync(async (req, res, next) => {
-  const blog = await Blog.find({ userid: req.params.id });
+  const blog = await Blog.find({
+    _id: req.params.id,
+  });
   if (blog.length > 0) {
     res.status(200).json({
       success: true,
