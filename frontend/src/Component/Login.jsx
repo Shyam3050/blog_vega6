@@ -10,7 +10,9 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  Link,
 } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
 const Login = () => {
   return (
     <>
@@ -24,10 +26,13 @@ const Login = () => {
           <Stack align={"center"}>
             <Heading fontSize={"4xl"}>Sign in to your account</Heading>
             <Text fontSize={"lg"} color={"gray.600"}>
-              to enjoy all of our cool <Text color={"blue.400"}>features</Text>{" "}
-              ✌️
+              to explore and share insightful
+              <Text color={"blue.400"} textAlign={"center"}>
+                articles and stories ✍️
+              </Text>
             </Text>
           </Stack>
+
           <Box
             rounded={"lg"}
             bg={useColorModeValue("white", "gray.700")}
@@ -53,14 +58,22 @@ const Login = () => {
                   <Text color={"blue.400"}>Forgot password?</Text>
                 </Stack>
                 <Button
-                  bg={"blue.400"}
+                  bg={"#48BB78"}
                   color={"white"}
                   _hover={{
-                    bg: "blue.500",
+                    bg: "#259b56",
                   }}
                 >
                   Sign in
                 </Button>
+              </Stack>
+              <Stack pt={6}>
+                <Text align={"center"}>
+                  Create An Account
+                  <NavLink to="/">
+                    <Link color={"blue.400"}> Signup</Link>
+                  </NavLink>
+                </Text>
               </Stack>
             </Stack>
           </Box>

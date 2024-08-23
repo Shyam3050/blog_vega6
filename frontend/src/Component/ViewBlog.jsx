@@ -1,6 +1,12 @@
 import { Box, Button, ButtonGroup, Container, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ViewBlog = () => {
+    const navigate = useNavigate();
+   const goBack = () => {
+     navigate(-1); 
+   };
   return (
     <>
       <Container maxW={"3xl"}>
@@ -11,12 +17,15 @@ const ViewBlog = () => {
           py={{ base: 20, md: 36 }}
         >
           <ButtonGroup spacing="2">
-            <Button variant="solid" colorScheme="blue">
+            <Button variant="solid" colorScheme="blue" onClick={goBack}>
               Back
             </Button>
-            <Button variant="ghost" colorScheme="blue">
+            <NavLink to={"/dashboard"} >
+
+            <Button variant="ghost" colorScheme="blue" >
               Home
             </Button>
+            </NavLink>
           </ButtonGroup>
 
           <Box>

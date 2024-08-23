@@ -11,6 +11,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
 
 const BlogItem = () => {
   return (
@@ -38,9 +39,11 @@ const BlogItem = () => {
       <CardFooter>
         <Flex w={"100%"} justifyContent={"space-between"}>
           <ButtonGroup spacing="2">
-            <Button variant="solid" colorScheme="blue">
-              View
-            </Button>
+            <NavLink to="/blog/670946901643">
+              <Button variant="solid" colorScheme="blue">
+                View
+              </Button>
+            </NavLink>
             <Button variant="ghost" colorScheme="blue">
               Edit
             </Button>
