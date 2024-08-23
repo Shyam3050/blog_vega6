@@ -6,15 +6,15 @@ const { generateJWT } = require("../utils/jwt");
 exports.registerUser = expressAsync(async (req, res, next) => {
   const { userName, email, password, pic } = req.body;
 
-  if ((!userName, !email, !password)) {
+  if (!userName || !email || !password) {
     res.status(400);
-    next(new Error("Please Enter name, email, password."));
+    return next(new Error("Please provide name, email, and password."));
   }
 
   const userExist = await User.findOne({ email });
   if (userExist) {
     res.status(400);
-    next(new Error("User Already exist."));
+    return next(new Error("User already exists."));
   }
 
   const userDetails = await User.create({
@@ -23,41 +23,57 @@ exports.registerUser = expressAsync(async (req, res, next) => {
     password,
     pic,
   });
+
   if (userDetails) {
     res.status(201).json({
-      _id: userDetails._id,
-      userName: userDetails.userDetails,
-      email: userDetails.email,
-      pic: userDetails.pic,
-      token: generateJWT(userDetails._id),
+      success: true,
+      message: "User registered successfully.",
+      data: {
+        _id: userDetails._id,
+        userName: userDetails.userName, // Fix here: was `userDetails.userDetails`
+        email: userDetails.email,
+        pic: userDetails.pic,
+        token: generateJWT(userDetails._id),
+      },
     });
   } else {
     res.status(400).json({
-      data: "failed to create userDetails.",
+      success: false,
+      message: "Failed to create user.",
     });
   }
 });
 
+
 exports.login = expressAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
+  if (!email || !password) {
+    res.status(400);
+    return next(new Error("Please provide email and password."));
+  }
+
   const userDetails = await User.findOne({ email }).select("+password");
-  console.log(userDetails);
 
   if (
     userDetails &&
     (await userDetails.matchPassword(password, userDetails.password))
   ) {
     res.status(200).json({
-      _id: userDetails._id,
-      userName: userDetails.userName,
-      email: userDetails.email,
-      pic: userDetails.pic,
-      token: generateJWT(userDetails._id),
+      success: true,
+      message: "Login successful.",
+      data: {
+        _id: userDetails._id,
+        userName: userDetails.userName,
+        email: userDetails.email,
+        pic: userDetails.pic,
+        token: generateJWT(userDetails._id),
+      },
     });
   } else {
-    res.status(400).json({
-      data: "User not found",
+    res.status(401).json({
+      success: false,
+      message: "Invalid email or password.",
     });
   }
 });

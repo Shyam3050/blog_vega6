@@ -17,49 +17,57 @@ exports.newBlog = expressAsync(async (req, res, next) => {
 
   if (blogDetails) {
     res.status(201).json({
-      _id: blogDetails._id,
-       data: "blog created successfully"
+      success: true,
+      message: "Blog created successfully",
+      data: blogDetails,
     });
   } else {
     res.status(400).json({
-      data: "failed to create blog.",
+      success: false,
+      message: "Failed to create blog",
     });
   }
 });
 
 exports.updateBlog = expressAsync(async (req, res, next) => {
-
-  const blogDetails = await Blog.findByIdAndUpdate(req.params.id, req.body, {
+  const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
 
-  if (blogDetails) {
-    res.status(201).json({
-      status: "success",
+  if (updatedBlog) {
+    res.status(200).json({
+      success: true,
+      message: "Blog updated successfully",
+      data: updatedBlog,
     });
   } else {
-    res.status(400).json({
-      data: "failed to update blog.",
+    return res.status(404).json({
+      success: false,
+      message: "Blog not found",
     });
   }
 });
 
 exports.deleteBlog = expressAsync(async (req, res, next) => {
   await Blog.findByIdAndDelete(req.params.id);
-  res.status(201).json({
-    status: "success",
+  res.status(200).json({
+    success: true,
+    message: "Blog deleted successfully",
   });
 });
 
 exports.getBlog = expressAsync(async (req, res, next) => {
-  const blogs = await Blog.find({ userid: req.params.id });
-  if (blogs.length > 0) {
+  const blog = await Blog.find({ userid: req.params.id });
+  if (blog.length > 0) {
     res.status(200).json({
-      blogs,
+      success: true,
+      message: "Blog retrieved successfully",
+      data: blog,
     });
   } else {
-    res.status(400).json({
-      data: "failed to get blog.",
+    res.status(404).json({
+      success: false,
+      message: "Blog not found",
     });
   }
 });
@@ -68,11 +76,14 @@ exports.getAllBlog = expressAsync(async (req, res, next) => {
   const blogs = await Blog.find({});
   if (blogs.length > 0) {
     res.status(200).json({
-      blogs,
+      success: true,
+      message: "Blogs retrieved successfully",
+      data: blogs,
     });
   } else {
-    res.status(400).json({
-      data: "failed to get blog.",
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve blogs",
     });
   }
 });
